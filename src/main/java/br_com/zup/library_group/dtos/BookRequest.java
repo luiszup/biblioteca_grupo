@@ -8,7 +8,6 @@ public record BookRequest(
         String title,
         @NotBlank(message = "Author cannot be empty")
         String author,
-        @Pattern(regexp = "^(19|20)\\d{2}$", message = "The publication year must be between 1900 and 2099.")
         int publicationYear,
         @NotBlank
         String genre
