@@ -2,6 +2,7 @@ package br_com.zup.library_group.services;
 
 import br_com.zup.library_group.dtos.BookRequest;
 import br_com.zup.library_group.dtos.BookResponse;
+import br_com.zup.library_group.dtos.Genre;
 import br_com.zup.library_group.models.Book;
 import br_com.zup.library_group.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,12 @@ public class BookService {
         book.setTitle(bookRequest.title());
         book.setAuthor(bookRequest.author());
         book.setPublicationYear(bookRequest.publicationYear());
-        book.setGenre(bookRequest.genre());
+        book.setGenre(Genre.fromString(bookRequest.genre()));
 
         Book savedBook = bookRepository.save(book);
         return new BookResponse(
                 savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor(), savedBook.getPublicationYear(),
-                savedBook.getGenre()
+                savedBook.getGenre().toString()
         );
     }
 
