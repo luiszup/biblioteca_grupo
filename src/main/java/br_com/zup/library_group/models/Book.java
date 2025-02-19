@@ -1,7 +1,7 @@
 package br_com.zup.library_group.models;
 
+import br_com.zup.library_group.dtos.Genre;
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 public class Book {
@@ -17,7 +17,7 @@ public class Book {
     private String author;
 
     @Column(nullable = false)
-    private LocalDate publicationYear;
+    private int publicationYear;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -50,11 +50,11 @@ public class Book {
         this.author = author;
     }
 
-    public LocalDate getPublicationYear() {
+    public int getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(LocalDate publicationYear) {
+    public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
     }
 
