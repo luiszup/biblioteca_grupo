@@ -41,13 +41,13 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBookById(
-            @PathVariable("id")String id){
+            @PathVariable("id")Long id){
         return ResponseEntity.ok(bookService.getBookById(id));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookResponse> updateBook(
-            @PathVariable("id") String id,
+            @PathVariable("id") Long id,
             @Valid
             @RequestBody BookRequest BookRequest) {
         return ResponseEntity.ok(bookService.updateBook(id, BookRequest));
