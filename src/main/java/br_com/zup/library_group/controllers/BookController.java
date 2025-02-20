@@ -2,6 +2,17 @@ package br_com.zup.library_group.controllers;
 
 import br_com.zup.library_group.dtos.BookRequest;
 import br_com.zup.library_group.dtos.BookResponse;
+import br_com.zup.library_group.dtos.Genre;
+import br_com.zup.library_group.models.Book;
+import br_com.zup.library_group.repositories.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import br_com.zup.library_group.dtos.BookRequest;
+import br_com.zup.library_group.dtos.BookResponse;
 import br_com.zup.library_group.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,71 +44,28 @@ public class BookController {
     public ResponseEntity<BookResponse> registerBook(@Valid @RequestBody BookRequest bookRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(bookRequest));
     }
-}
 
-//        public boocksDto registerBook(boocksDto) {
-//
-//            books newBook = new books;
-//            //doing the sets and gets
-//
-//            //Salvando
-//            books savingBoocks = boocksRepository.save(newBoocks);
-//            //validações
-//            return boocksDto(savingBoocks.get)
-//            throw new handleGenericException201(" " + gender + ". Escolha uma categoria valida.");
-//
-//        }
-//
-//        // Listingallbooks
-//        public List<boocksDto> getBookById() {
-//            return boocksRepository.findabyID()
-//                    .map(produtos -> new boocksDto(produtos.getNomeProduto(), produtos.getPrecoProduto(), produtos.getQuantidade()))
-//                    .collect(Collectors.toList());
-//            throw new handleGenericException200("ListingBoocks");
-//
-//        }
-//
-//        //Lisingbook
-//        public boocksDto Listingbook(long id) {
-//            Optional<books> booksOptional = booksRepository.findById(cpf);
-//            Books books = booksOptional.get();
-//            if (boock.isEmpty()) {
-//                return new BooksDto(books.getCpf(), books.getEmail(), books.getNomeUsuario());
-//                throw new handleGenericException200("ListingBoock");
-//            }
-//            else {
-//                throw new handleGenericException404("Book not found");
-//            }
-//        }
-//        // atualizeBoock
-//        public BooksDto updateBook(Long id, BooksDto booksDto) {
-//            Optional<books> booksOptional = booksRepository.findById(id);
-//            genderValidator(String gender);
-//            if (booksOptional.isPresent()) {
-//                Boock BoockAtualizad = booksptional.get();
-//                BoockAtualizad.setNomeUsuario(booksDTO.getNomeUsuario());
-//                BoockAtualizad.setCpf(booksDTO.getCpf());
-//                BoockAtualizad.setEmail(clientesDTO.getEmail());
-//                Boock BoockSalvo = clientesRepository.save(clienteAtualizado);
-//                return new BooksDto(clienteSalvo.getCpf(), clienteSalvo.getEmail(), clienteSalvo.getNomeUsuario());
-//            } else {
-//                throw new handleGenericException("Cliente não encontrado!");
-//            }
-//        }
-//
-//        //DeleteBoock
-//        public BooksDto deleteBook(long id,BooksDto booksDto){
-//            BoockRepository.deleteById(id);
-//
-//            throw new handleGenericException201("livro deletado");
-//
-//
-//        }
-//
-//        //---------------------------
-//        private Void BoockCategori(String BoockCategori) {
-//            BoockCategori.get
-//            if (gender != (gender < FICTION || NON_FICTION || SCIENCE || HISTORY || FANTASY >))
-//                throw new handleGenericException("Aviso: não esiste a categoria: " + gender + ". Escolha uma categoria valida.");
-//        }
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<BookResponse> getBookById(
+            @PathVariable("id") Long id) {
+        return ResponseEntity.ok(bookService.getBookById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BookResponse>> getAllBooks() {
+        return ResponseEntity.ok(bookService.getAllBooks());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BookResponse> updateBook(
+            @PathVariable("id") Long id,
+            @Valid
+            @RequestBody BookResponse bookResponse) { //depois auterar para a correta boock response
+        return ResponseEntity.ok(bookService.updateBook(id, bookResponse));  //depois auterar para a correta boock response
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.noContent().build();
+    }
+}
